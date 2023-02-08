@@ -17,12 +17,12 @@ public class Util {
 
     static {
         try{
-            cunt = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             try {
-                cunt.close();
+                connection.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
