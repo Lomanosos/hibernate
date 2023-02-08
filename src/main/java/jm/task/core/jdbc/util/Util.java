@@ -11,16 +11,22 @@ public class Util {
 
     private static Connection cunt;
 
-    public static Connection getConnection() throws SQLException{
+    public static Connection getCunt() {
+        return cunt;
+    }
+
+    static {
         try{
             cunt = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            cunt.close();
+            try {
+                cunt.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
-        return cunt;
     }
-
 
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
 
-    Connection cunt = Util.getConnection();
+    Connection cunt = Util.getCunt();
     User user = new User();
     public UserDaoJDBCImpl() throws SQLException {
 
@@ -61,6 +61,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setByte(3, user.getAge());
 
             preparedStatement.execute();
+            System.out.printf("User с именем - %s добавлен в базу данных", user.getName());
 
         } catch (SQLException e) {
 
@@ -106,6 +107,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setLastName(resultSet.getString("Lastname"));
                 user.setAge(resultSet.getByte("Age"));
                 listuser.add(user);
+                System.out.println(user.toString());
             }
         } catch (SQLException e) {
 
