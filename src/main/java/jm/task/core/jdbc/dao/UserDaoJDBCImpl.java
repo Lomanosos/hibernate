@@ -47,14 +47,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) throws SQLException {
 
-        String sql = "INSERT INTO users (name, lastName, age) VALUES (?, ?, ?);";
+        String sql = String.format("INSERT INTO users (name, lastName, age) VALUES (%s, %s, %s);", name, lastName, age);
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getLastName());
-            preparedStatement.setByte(3, user.getAge());
 
             preparedStatement.execute();
 
@@ -68,11 +63,10 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) throws SQLException {
 
-        String sql = "DELETE FROM users WHERE Id = ?;";
+        String sql = String.format("DELETE FROM users WHERE Id = %s;", id);
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
 
-            preparedStatement.setLong(1, id);
             preparedStatement.execute();
 
         } catch(SQLException e){
