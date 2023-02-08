@@ -17,24 +17,22 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() throws SQLException {
 
-        String sql = "CREATE TABLE IF NOT EXSISTS users (Id INT PRIMARY KEY AUTO_INCREMENT, Name VARCHAR(20), Lastname VARCHAR(30), Age TINYINT);";
+        //String sql = "create table IF NOT EXSISTS users (Id INT PRIMARY KEY AUTO_INCREMENT, Name VARCHAR(20), Lastname VARCHAR(30), Age TINYINT);";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement("create table if not exists users (id int auto_increment, name varchar(30), lastname varchar(30), age int, primary_key(id) );")){
 
             preparedStatement.execute();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            if (connection != null) {
-                connection.close();
-            }
+
         }
     }
 
     public void dropUsersTable() throws SQLException {
 
-        String sql = "DROP TABLE IF EXSISTS users;";
+        String sql = "drop table IF EXISTS users;";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -43,9 +41,7 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch(SQLException e){
 
         } finally {
-            if (connection != null) {
-                connection.close();
-            }
+
         }
     }
 
@@ -66,9 +62,7 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException e) {
 
         } finally {
-            if (connection != null) {
-                connection.close();
-            }
+
         }
     }
 
@@ -85,9 +79,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
         } finally {
 
-            if (connection != null) {
-                connection.close();
-            }
+
         }
     }
 
@@ -112,9 +104,7 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException e) {
 
         } finally {
-            if (connection != null) {
-                connection.close();
-            }
+
         }
         return listuser;
     }
@@ -130,9 +120,7 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch(SQLException e){
 
         } finally {
-            if (connection != null) {
-                connection.close();
-            }
+
         }
     }
 }
