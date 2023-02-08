@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
 
     public void saveUser(String name, String lastName, byte age) throws SQLException {
         userDao.saveUser(name, lastName, age);
+        System.out.println();
     }
 
     public void removeUserById(long id) throws SQLException {
