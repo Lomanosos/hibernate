@@ -9,8 +9,8 @@ import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
 
-    Connection cunt = Util.getCunt();
-    User user = new User();
+    private Connection connection = Util.getConnection();
+    private User user = new User();
     public UserDaoJDBCImpl() throws SQLException {
 
     }
@@ -19,15 +19,15 @@ public class UserDaoJDBCImpl implements UserDao {
 
         String sql = "CREATE TABLE IF NOT EXSISTS users (Id INT PRIMARY KEY AUTO_INCREMENT, Name VARCHAR(20), Lastname VARCHAR(30), Age TINYINT);";
 
-        try (PreparedStatement preparedStatement = cunt.prepareStatement(sql)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
 
             preparedStatement.execute();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            if (cunt != null) {
-                cunt.close();
+            if (connection != null) {
+                connection.close();
             }
         }
     }
@@ -36,15 +36,15 @@ public class UserDaoJDBCImpl implements UserDao {
 
         String sql = "DROP TABLE IF EXSISTS users;";
 
-        try (PreparedStatement preparedStatement = cunt.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.execute();
 
         } catch(SQLException e){
 
         } finally {
-            if (cunt != null) {
-                cunt.close();
+            if (connection != null) {
+                connection.close();
             }
         }
     }
@@ -53,7 +53,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
         String sql = "INSERT INTO users (name, lastName, age) VALUES (?, ?, ?);";
 
-        try (PreparedStatement preparedStatement = cunt.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
 
             preparedStatement.setString(1, user.getName());
@@ -66,8 +66,8 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException e) {
 
         } finally {
-            if (cunt != null) {
-                cunt.close();
+            if (connection != null) {
+                connection.close();
             }
         }
     }
@@ -76,7 +76,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
         String sql = "DELETE FROM users WHERE Id = ?;";
 
-        try (PreparedStatement preparedStatement = cunt.prepareStatement(sql);) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
 
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
@@ -85,8 +85,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
         } finally {
 
-            if (cunt != null) {
-                cunt.close();
+            if (connection != null) {
+                connection.close();
             }
         }
     }
@@ -96,7 +96,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
         String sql = "SELECT * FROM users;";
 
-        try (PreparedStatement preparedStatement = cunt.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery(sql);
 
@@ -112,8 +112,8 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException e) {
 
         } finally {
-            if (cunt != null) {
-                cunt.close();
+            if (connection != null) {
+                connection.close();
             }
         }
         return listuser;
@@ -123,15 +123,15 @@ public class UserDaoJDBCImpl implements UserDao {
 
         String sql = "TRUNCATE TABLE users;";
 
-        try (PreparedStatement preparedStatement = cunt.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.execute();
 
         } catch(SQLException e){
 
         } finally {
-            if (cunt != null) {
-                cunt.close();
+            if (connection != null) {
+                connection.close();
             }
         }
     }

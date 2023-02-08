@@ -9,10 +9,10 @@ public class Util {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
-    private static Connection cunt;
+    private static Connection connection;
 
-    public static Connection getCunt() {
-        return cunt;
+    public static Connection getConnection() {
+        return connection;
     }
 
     static {
