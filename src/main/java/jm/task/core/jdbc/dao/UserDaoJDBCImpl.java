@@ -11,7 +11,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     private Connection connection = Util.getConnection();
     private User user = new User();
-    public UserDaoJDBCImpl() throws SQLException {
+    public UserDaoJDBCImpl() {
 
     }
 
@@ -19,14 +19,12 @@ public class UserDaoJDBCImpl implements UserDao {
 
         //String sql = "create table IF NOT EXSISTS users (Id INT PRIMARY KEY AUTO_INCREMENT, Name VARCHAR(20), Lastname VARCHAR(30), Age TINYINT);";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("create table if not exists users (id int primary key auto_increment, name varchar(30), lastname varchar(30), age tinyint null);")){
+        try (PreparedStatement preparedStatement = connection.prepareStatement("create table if not exists users (id int primary key auto_increment, name varchar(30), lastname varchar(30), age int);")){
 
             preparedStatement.execute();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-
         }
     }
 
@@ -40,23 +38,22 @@ public class UserDaoJDBCImpl implements UserDao {
 
         } catch(SQLException e){
 
-        } finally {
-
         }
     }
 
     public void saveUser(String name, String lastName, byte age) throws SQLException {
 
-        String sql = String.format("INSERT INTO users (name, lastName, age) VALUES (%s, %s, %s);", name, lastName, age);
+        String sql = "INSERT INTO users (name, lastName, age) VALUES (?, ?, ?);";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setByte(3, age);
             preparedStatement.execute();
 
 
         } catch (SQLException e) {
-
-        } finally {
 
         }
     }
@@ -71,23 +68,20 @@ public class UserDaoJDBCImpl implements UserDao {
 
         } catch(SQLException e){
 
-        } finally {
-
-
         }
     }
 
     public List<User> getAllUsers() throws SQLException {
         List<User> listuser = new ArrayList<>();
-
+        User user = null;
         String sql = "SELECT * FROM users;";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Statement preparedStatement = connection.createStatement()) {
 
             ResultSet resultSet = preparedStatement.executeQuery(sql);
 
             while(resultSet.next()) {
-                User user = new User();
+                user = new User();
                 user.setId(resultSet.getLong("Id"));
                 user.setName(resultSet.getString("Name"));
                 user.setLastName(resultSet.getString("Lastname"));
@@ -97,13 +91,11 @@ public class UserDaoJDBCImpl implements UserDao {
             }
         } catch (SQLException e) {
 
-        } finally {
-
         }
         return listuser;
     }
 
-    public void cleanUsersTable() throws SQLException {
+    public void cleanUsersTable() throws SQLException { //работает
 
         String sql = "TRUNCATE TABLE users;";
 
@@ -112,8 +104,6 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.execute();
 
         } catch(SQLException e){
-
-        } finally {
 
         }
     }

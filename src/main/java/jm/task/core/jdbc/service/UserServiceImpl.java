@@ -35,9 +35,7 @@ public class UserServiceImpl implements UserService {
 
     public List<User> getAllUsers() throws SQLException {
         List<User> list = userDao.getAllUsers();
-        for (User s : list) {
-            System.out.println(s);
-        }
+        list.forEach(System.out::println);
         return list;
     }
 
