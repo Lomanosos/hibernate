@@ -8,8 +8,7 @@ public class Util {
     private static final String URL = "jdbc:mysql://localhost:3306/pp_1hmw";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
-
-    private static Connection connection;
+    private static final Connection connection;
 
     public static Connection getConnection() {
         return connection;
