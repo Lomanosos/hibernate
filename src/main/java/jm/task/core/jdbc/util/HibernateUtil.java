@@ -25,8 +25,10 @@ public class HibernateUtil {
                 properties.put(Environment.URL, url);
                 properties.put(Environment.USER, user);
                 properties.put(Environment.PASS, pass);
+                properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+                properties.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 properties.put(Environment.SHOW_SQL, "true");
-                properties.put(Environment.HBM2DDL_AUTO, "");
+                properties.put(Environment.HBM2DDL_AUTO, "update");
                 configuration.setProperties(properties);
                 configuration.addAnnotatedClass(User.class);
 

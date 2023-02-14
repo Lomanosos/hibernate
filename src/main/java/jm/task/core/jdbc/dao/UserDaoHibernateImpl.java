@@ -3,7 +3,6 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
@@ -24,9 +23,9 @@ public class UserDaoHibernateImpl implements UserDao {
     public void createUsersTable() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            String sql = "CRATE TABLE IF NOT EXISTS user" +
-                    "(id AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50) NOT NULL" +
-                    "lastName VARCHAR(50) NOT NULL" + "age INT)";
+            String sql = "CRATE TABLE IF NOT EXISTS users" +
+                    "(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50) NOT NULL" +
+                    "lastName VARCHAR(50) NOT NULL, " + "age INT)";
 
             Query query = session.createSQLQuery(sql).addEntity(User.class);
             query.executeUpdate();
